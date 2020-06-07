@@ -1,3 +1,2 @@
 Instalação do Plugin para o SQL Server
 npm install -S mssql
-

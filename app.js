@@ -10,9 +10,37 @@ const authTokens = {};
 const helmet = require('helmet');
 const mysql = require('mysql');
 require('devbox-linq');
+//Dados para conexão com o banco de dados MSSQL SERVER
+//Este estamos chamando a biblioteca para conecxão com banco de dados MSSQL
+const sql = require('mssql');
+//Aqui estamos passando os dados de acesso a o Banco de Dados
+const connStr = "Server=192.168.4.4;Database=MGE_TESTE;User Id=sankhya;Password=tecsis;";
+
+//Aqui vamos criar um POOL de conecxão com o banco de dados
+//fazendo a conexão global
+sql.connect(connStr)
+   .then(conn => GLOBAL.conn = conn)
+   .catch(err => console.log(err));
+
+//Comando que sera usado para executar as consultas com o banco de dados
+//Todas as consultas deverão chamar esta função para executar consultas
+function execSQLQuery(sqlQry, res){
+    GLOBAL.conn.request()
+               .query(sqlQry)
+               .then(result => res.json(result.recordset))
+               .catch(err => res.json(err));
+}
+
+//Testando a consulta a o banco de dados
+app.get('/clientes', (req, res) =>{
+    const variavel = 'qualidade@metodotelecom.com.br';
+    execSQLQuery('SELECT TOP(10) CTT.CODPARC,PAR.NOMEPARC,CTT.CODCONTATO,CTT.NOMECONTATO,CTT.APELIDO,CTT.TELEFONE,CTT.EMAIL,CTT.SENHAACESSO,CTT.CODUSU FROM MGE_TESTE.sankhya.TGFCTT as CTT    INNER JOIN MGE_TESTE.sankhya.TGFPAR AS PAR ON PAR.CODPARC = CTT.CODPARC WHERE CTT.EMAIL like'+"'%"+variavel+"%'", res);
+})
 
 
-//Banco de dados de teste local Tasks
+
+
+//Banco de dados de teste mysql local Tasks
 // const conn = mysql.createConnection({
 //     host: 'localhost',
 //     user: 'root',
@@ -35,7 +63,6 @@ app.use(helmet());
 var limiter = require('express-limiter')(app)
 
 
-   
 
 const users = [
     // This user is added to the array to avoid creating new user on each restart

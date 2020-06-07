@@ -16,6 +16,7 @@
     "express-handlebars": "^3.1.0",
     "express-limiter": "^1.6.1",
     "helmet": "^3.21.3",
+    "mssql": "^6.2.0",
     "mysql": "^2.18.1"
   }
 }
