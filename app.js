@@ -13,18 +13,18 @@ require('devbox-linq');
 
 
 //Banco de dados de teste local Tasks
-const conn = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    //password: 'Rodri*127',
-    database: 'task'
-  });
+// const conn = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     //password: 'Rodri*127',
+//     database: 'task'
+//   });
    
-  //connect to database
-  conn.connect((err) =>{
-    if(err) throw err;
-    console.log('Mysql Connected...');
-  });
+//   //connect to database
+//   conn.connect((err) =>{
+//     if(err) throw err;
+//     console.log('Mysql Connected...');
+//   });
    
 
 
@@ -199,3 +199,4 @@ app.get('/dashboard', (req, res) => {
 });
 
 app.listen(3000);
+console.log('Rodando na Porta 3000...');
